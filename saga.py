@@ -33,6 +33,7 @@ class SAGA(Optimizer):
             raise ValueError("Need index of example")
 
         idx = closure
+        #param_groups assumed to have only 1 group for now
         for group in self.param_groups:
             for (p,past_grad,avg_grad) in zip(group['params'],self.past_gradients[idx].parameters(),self.avg_gradients
                                               .parameters()):
