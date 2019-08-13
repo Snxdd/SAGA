@@ -46,7 +46,7 @@ class SAGA(Optimizer):
                 self.avg_gradients = (self._init_params(copy.deepcopy(group['params'])))
                 self.past_gradients = [self._init_params(copy.deepcopy(group['params'])) for i in range(n_classes)]
         else:
-            #If want to initialize the gradient table, probably not the case
+            #if want to initialize the gradient table, probably not the case
             pass
         
         #as attributes for convenience, but could be added to defaults
@@ -79,7 +79,7 @@ class SAGA(Optimizer):
                 if p.grad is None:
                     continue
                 
-                #Bias correction
+                #bias correction
                 bias_corr = 1
                 if self.class_proba is not None:
                     bias_corr = 1/(self.n_classes*self.class_proba[idx])
@@ -98,7 +98,7 @@ class SAGA(Optimizer):
                     d_p.add_(weight_decay, p.data)
                 
                 if (self.use_adam):
-                    #ADAM, same code as in pytorch Adam optimizer
+                    #Adam, same code as in pytorch Adam optimizer
                     state = self.state[p]
                     if len(state) == 0:
                         state['step'] = 0
