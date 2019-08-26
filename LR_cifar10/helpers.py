@@ -1,6 +1,6 @@
 import numpy as np
 import os
-import cv2
+#import cv2
 
 def get_data(dataset, n_channels, n_samples = 0,greyscale = False):
     OUT_DIM = 0
