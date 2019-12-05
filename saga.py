@@ -9,6 +9,8 @@ class SAGA(Optimizer):
         the number of gradients that must be stored
     beta1 : float
         the "usual" sgd momentum value used
+    betas : float
+        betas used for Adam
     momentum : float
         momentum on stored gradients (1 means no momentum)
     class_proba : list (floats)
@@ -18,7 +20,7 @@ class SAGA(Optimizer):
     compute_var : boolean
         if we want the optimizer to return the gradient variance
     use_adam : boolean
-        will use adam if set to True
+        will use Adam update if set to True
     """
     
     def __init__(self, params, n_classes = required, lr=required, beta1 = 0, momentum = 0.1, betas=(0.9, 0.999),eps = 1e-8,
@@ -89,7 +91,6 @@ class SAGA(Optimizer):
                 #variance reduction and update table
                 d_p = p.grad.data - bias_corr*past_grad.data + avg_grad.data
                 avg_grad.data -= (past_grad.data)/self.n_classes
-                #past_grad.data = self.momentum*p.grad.data.clone().detach() + (1-self.momentum)*past_grad.data.clone().detach()
                 past_grad.data = self.momentum*p.grad.data + (1-self.momentum)*past_grad.data
                 avg_grad.data += past_grad.data/self.n_classes
 
