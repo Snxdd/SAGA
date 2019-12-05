@@ -87,7 +87,7 @@ class SAGA(Optimizer):
                     bias_corr = 1/(self.n_classes*self.class_proba[idx])
                 
                 #variance reduction and update table
-                d_p = p.grad.data - bias_corr*past_grad.data/2 + avg_grad.data/2
+                d_p = p.grad.data - bias_corr*past_grad.data + avg_grad.data
                 avg_grad.data -= (past_grad.data)/self.n_classes
                 #past_grad.data = self.momentum*p.grad.data.clone().detach() + (1-self.momentum)*past_grad.data.clone().detach()
                 past_grad.data = self.momentum*p.grad.data + (1-self.momentum)*past_grad.data
