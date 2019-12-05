@@ -42,7 +42,6 @@ class SAGA(Optimizer):
         super(SAGA, self).__init__(params, defaults)
         
         #initialize avg and past gradients to 0
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         if initial_gradients is None:
 #             param_groups assumed to have only 1 group
             for group in self.param_groups:
