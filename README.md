@@ -1,1 +1,1 @@
-Basic SAGA implementation
+Variance reduced Adam
