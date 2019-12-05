@@ -22,7 +22,7 @@ class SAGA(Optimizer):
     """
     
     def __init__(self, params, n_classes = required, lr=required, beta1 = 0, momentum = 0.1, betas=(0.9, 0.999),eps = 1e-8,
-                 class_proba = None, initial_gradients = None, compute_var = False ,weight_decay=0,use_adam = False, model = None):
+                 class_proba = None, initial_gradients = None, compute_var = False ,weight_decay=0,use_adam = False):
         if lr is not required and lr < 0.0:
             raise ValueError("Invalid learning rate: {}".format(lr))
         if momentum < 0.0:
@@ -46,8 +46,6 @@ class SAGA(Optimizer):
             for group in self.param_groups:
                 self.avg_gradients = (self._init_params(copy.deepcopy(group['params'])))
                 self.past_gradients = [self._init_params(copy.deepcopy(group['params'])) for i in range(n_classes)]
-#             self.avg_gradients = (self._init_params(model(n_classes).to(device)))
-#             self.past_gradients = [self._init_params(model(n_classes).to(device)) for i in range(n_classes)]
         else:
             #if want to initialize the gradient table, probably not the case
             pass
@@ -69,10 +67,6 @@ class SAGA(Optimizer):
             param.data.fill_(0)
         return params
     
-#     def _init_params(self,model):
-#         for param in model.parameters():
-#             param.data.fill_(0)
-#         return model
    
     def step(self, idx, closure=None):
         loss = None
@@ -84,9 +78,6 @@ class SAGA(Optimizer):
         for group in self.param_groups:
             weight_decay = group['weight_decay']
             for (p,past_grad,avg_grad) in zip(group['params'],self.past_gradients[idx],self.avg_gradients):
-#         for group in self.param_groups:
-#             weight_decay = group['weight_decay']
-#             for (p,past_grad,avg_grad) in zip(group['params'],self.past_gradients[idx].parameters(),self.avg_gradients.parameters()):
                 if p.grad is None:
                     continue
                 
